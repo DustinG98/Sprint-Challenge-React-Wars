@@ -38,6 +38,7 @@ const App = () => {
     flex-wrap: wrap;
   `;
 
+
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
@@ -67,6 +68,9 @@ const App = () => {
   }, [page])
 
 
+  
+
+  let itemStr;
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
@@ -77,14 +81,15 @@ const App = () => {
         onChange={handleChange}
       />
       <CardCont>
-      {cards.map((cv, index) => {
+      {
+      cards.map((cv, index) => {
         for(var item in cv){
-          let itemStr = cv[item] + "";
+           itemStr = cv[item] + "";
           if(itemStr.toLowerCase().includes(searchTerm.toLowerCase())){
             return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
           } else if(searchTerm === ''){
             return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
-          }
+          } 
         }
         return null;
       })}
