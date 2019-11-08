@@ -66,9 +66,6 @@ const App = () => {
     })
   }, [page])
 
-  const search = searchValue => {
-    
-  }
 
   return (
     <div className="App">
