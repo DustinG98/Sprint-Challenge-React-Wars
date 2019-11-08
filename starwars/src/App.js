@@ -28,6 +28,12 @@ const App = () => {
 
   const [page, setPage] = useState(1);
 
+  if(page === 0){
+    setPage(9);
+  } else if(page > 9){
+    setPage(1);
+  }
+
   useEffect(() => {
     axios.get(`https://swapi.co/api/people/?page=${page}`)
     .then(resp => {
@@ -59,7 +65,7 @@ const App = () => {
     e.preventDefault();
     setTimeout(() => {
       switchPage();
-    }, 400)
+    }, 250)
   };
   return (
     <div className="App">
