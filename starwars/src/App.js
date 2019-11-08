@@ -81,6 +81,8 @@ const App = () => {
         for(var item in cv){
           if(cv[item] === searchTerm){
             return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+          } else if(searchTerm === ''){
+            return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
           }
         }
         return null;
