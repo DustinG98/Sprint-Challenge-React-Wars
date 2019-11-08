@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import StarWarsCard from './components/starWarsCard'
 import styled from 'styled-components'
-import Paginate from './components/Pagination'
+import { classBody } from '@babel/types';
 
 
 
@@ -11,7 +11,6 @@ const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [cards, setCards] = useState([]);
-  const [page, setPage] = useState(1);
   const [isSending, setIsSending] = useState(false)
   const isMounted = useRef(true)
 
@@ -27,63 +26,42 @@ const App = () => {
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
+
+  const [page, setPage] = useState(1);
   useEffect(() => {
-    axios.get(`https://swapi.co/api/people/?page=${page}`)
+    axios.get(`https://swapi.co/api/people/`)
     .then(resp => {
       setCards(resp.data.results)
-      console.log(resp.data)
     })
     .catch(err => {
       console.log(`There is no people. ${err}`)
     })
-  }, [page])
+  }, [])
 
-  const nextPage = useCallback(() => {
-    if(isSending) return
-    setIsSending(true);
-    setCards([]);
-    axios.get(`https://swapi.co/api/people/?page=${page}`)
-    .then(resp => {
-      axios.get(`${resp.data.next}`)
-      .then(response => {
-        setCards(response.data.results)
-      })
-    })
-    .catch(err => {
-      console.log(`There is no people. ${err}`)
-    })
-    if(isMounted.current)
-      setIsSending(false)
-  }, [isSending, page])
-
-  const previousPage = useCallback(() => {
+  const switchPage = useCallback(() => {
     if(isSending) return
     setIsSending(true);
     setCards([]);
     axios.get(`https://swapi.co/api/people/?page=${page}`)
     .then(resp => {
         setCards(resp.data.results)
-    })
+        console.log(resp.data)
+      })
     .catch(err => {
       console.log(`There is no people. ${err}`)
     })
     if(isMounted.current)
       setIsSending(false)
-  }, [isSending, page])
+  }, [isSending])
 
 
-  function handleClickNext(e, index) {
+
+  function handleClick(e) {
     e.preventDefault();
     setTimeout(() => {
-      nextPage();
+      switchPage();
     }, 400)
   };
-  function handleClickPrevious(e, index) {
-    e.preventDefault();
-    setTimeout(() => {
-      previousPage();
-    }, 400);
-  }
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
@@ -93,12 +71,14 @@ const App = () => {
       })}
       </CardCont>
       <div>
+        <button onClick={ e => {
+          handleClick(e);
+          setPage(page - 1);
+        }}>Previous</button>
         <button onClick={e => {
-          handleClickNext(e, 2)
-          }}>Next Page</button>
-        <button onClick={e => {
-          handleClickPrevious(e, 2)
-          }}>Previous Page</button>
+          handleClick(e);
+          setPage(page + 1);
+        }}>Next</button>
       </div>
     </div>
   );
