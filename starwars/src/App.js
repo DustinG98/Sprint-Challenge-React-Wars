@@ -14,6 +14,24 @@ const App = () => {
   const isMounted = useRef(true)
 
 
+  
+  const Button = styled.button`
+    border-radius: 10px;
+    padding: 5px 20px;
+    background-color: white;
+    border: 2px solid #1d1f1d;
+    opacity: 0.8;
+    color: #1d1f1d;
+    margin: 0 25px;
+    font-weight: 700;
+
+    &:hover {
+      background-color: #1d1f1d;
+      border: 2px solid white;
+      color: white;
+    }
+  `;
+
   const CardCont = styled.div`
     display: flex;
     flex-direction: row;
@@ -76,8 +94,8 @@ const App = () => {
       })}
       </CardCont>
       <div>
-        <button onMouseDown={() => setPage(page-1)} onMouseUp={handleClick}>Previous</button>
-        <button onMouseDown={() => setPage(page+1)} onMouseUp={handleClick}>Next</button>
+        <Button onMouseDown={() => setPage(page-1)} onMouseUp={handleClick}>{'<'}</Button>
+        <Button onMouseDown={() => setPage(page+1)} onMouseUp={handleClick}>{'>'}</Button>
       </div>
     </div>
   );
