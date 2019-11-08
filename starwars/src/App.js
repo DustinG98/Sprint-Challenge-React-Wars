@@ -54,31 +54,7 @@ const App = () => {
       setIsSending(false)
   }, [isSending, page])
 
-  // const nextPage = useCallback(() => {
-  //   if(isSending) return
-  //   setIsSending(true);
-  //   setPage(page + 1);
-  //   setCards([]);
-  //   axios.get(`https://swapi.co/api/people/?page=${page}`)
-  //   .then(resp => {
-  //       setCards(resp.data.results)
-  //       console.log(resp.data)
-  //     })
-  //   .catch(err => {
-  //     console.log(`There is no people. ${err}`)
-  //   })
-  //   if(isMounted.current)
-  //     setIsSending(false)
-  // }, [isSending, page])
-
-  // let tempPage = page;
-  // function handleClickPrevious(e) {
-  //   setPage(tempPage -= 1);
-  //   e.preventDefault();
-  //   setTimeout(() => {
-  //     switchPage();
-  //   }, 400)
-  // };
+ 
   function handleClick(e) {
     e.preventDefault();
     setTimeout(() => {
