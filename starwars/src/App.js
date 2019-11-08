@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useCallback, useRef } from 'react';
+import React, { useState,useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 import StarWarsCard from './components/starWarsCard'
@@ -10,8 +10,6 @@ const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [cards, setCards] = useState([]);
-  const [isSending, setIsSending] = useState(false)
-  const isMounted = useRef(true)
 
 
   
@@ -45,6 +43,11 @@ const App = () => {
   // sync up with, if any.
 
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = event => {
+    setSearchTerm(event.target.value)
+  }
 
   if(page === 0){
     setPage(9);
@@ -53,6 +56,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    setCards([]);
     axios.get(`https://swapi.co/api/people/?page=${page}`)
     .then(resp => {
       setCards(resp.data.results)
@@ -60,42 +64,34 @@ const App = () => {
     .catch(err => {
       console.log(`There is no people. ${err}`)
     })
-  }, [])
+  }, [page])
 
-  const switchPage = useCallback(() => {
-    if(isSending) return
-    setIsSending(true);
-    setCards([]);
-    axios.get(`https://swapi.co/api/people/?page=${page}`)
-    .then(resp => {
-        setCards(resp.data.results)
-        console.log(resp.data)
-      })
-    .catch(err => {
-      console.log(`There is no people. ${err}`)
-    })
-    if(isMounted.current)
-      setIsSending(false)
-  }, [isSending, page])
+  const search = searchValue => {
+    
+  }
 
- 
-  function handleClick(e) {
-    e.preventDefault();
-    setTimeout(() => {
-      switchPage();
-    }, 250)
-  };
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleChange}
+      />
       <CardCont>
       {cards.map((cv, index) => {
-        return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+        for(var item in cv){
+          if(cv[item] === searchTerm){
+            return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+          }
+        }
+        return null;
       })}
       </CardCont>
       <div>
-        <Button onMouseDown={() => setPage(page-1)} onMouseUp={handleClick}>{'<'}</Button>
-        <Button onMouseDown={() => setPage(page+1)} onMouseUp={handleClick}>{'>'}</Button>
+        <Button onMouseDown={() => setPage(page-1)} >{'<'}</Button>
+        <Button onMouseDown={() => setPage(page+1)}>{'>'}</Button>
       </div>
     </div>
   );
