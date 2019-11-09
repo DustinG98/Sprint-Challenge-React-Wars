@@ -5,13 +5,13 @@ import StarWarsCard from './components/starWarsCard'
 import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Page1 from './imgdata/page1'
 
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [cards, setCards] = useState([]);
-
 
   
   const Button = styled.button`
@@ -81,6 +81,7 @@ const App = () => {
   
 
   let itemStr;
+  let imgSrc;
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
@@ -94,12 +95,15 @@ const App = () => {
         <Grid item xs={3}>
         {
         cards.map((cv, index) => {
+          Page1.forEach((source, index2) => {
+            return (index === index2) ? imgSrc = source.src : null;
+          })
           for(var item in cv){
             itemStr = cv[item] + "";
             if(itemStr.toLowerCase().includes(searchTerm.toLowerCase())){
-              return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+              return <StarWarsCard src={imgSrc} key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
             } else if(searchTerm === ''){
-              return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+              return <StarWarsCard src={imgSrc} key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
             } 
           }
           return null;

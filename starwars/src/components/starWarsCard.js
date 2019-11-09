@@ -57,7 +57,7 @@ export default function StarWarsCard(props) {
             <Card className={classes.card} justify='center'>
                 <CardMedia
                     className={classes.media}
-                    image={require("../star-background.jpeg")}
+                    image={require("../people/" + props.src)}
                     title="Star Background"
                 ></CardMedia>
                 <h2 className={classes.color}>{props.name}</h2>
