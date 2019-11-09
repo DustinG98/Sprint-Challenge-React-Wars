@@ -60,9 +60,10 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
+
   if(page === 0){
-    setPage(9);
-  } else if(page > 9){
+    setPage(3);
+  } else if(page > 3){
     setPage(1);
   }
 
@@ -75,11 +76,11 @@ const App = () => {
     .catch(err => {
       console.log(`There is no people. ${err}`)
     })
+
   }, [page])
 
   const classes = useStyles();
   
-
   let itemStr;
   let imgSrc;
   return (
@@ -95,8 +96,14 @@ const App = () => {
         <Grid item xs={3}>
         {
         cards.map((cv, index) => {
-          Page1.forEach((source, index2) => {
-            return (index === index2) ? imgSrc = source.src : null;
+          Page1.forEach((pageOBJ, index2) => {
+            if(index2 === page - 1){
+              let sources = pageOBJ.src;
+              console.log(sources)
+              sources.forEach((imgSRC, index3) => {
+                return (index === index3) ? imgSrc = imgSRC : null;
+              })
+            } 
           })
           for(var item in cv){
             itemStr = cv[item] + "";

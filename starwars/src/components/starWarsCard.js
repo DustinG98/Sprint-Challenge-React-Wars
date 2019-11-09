@@ -19,10 +19,12 @@ const useStyles = makeStyles(theme => ({
       primary: grey[50],
       padding: 20,
       borderRadius: 10,
+      border: '2px solid white',
     },
     media : {
       minHeight: 200,
       borderRadius: 10,
+      border: '2px solid white',
     },
     control: {
         padding: theme.spacing(2),

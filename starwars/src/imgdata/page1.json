@@ -1,32 +1,11 @@
-[
+[ 
     {
-        "src" : "luke-skywalker.jpeg"
+        "src" : ["luke-skywalker.jpeg", "C-3PO.jpeg", "r2-d2.jpeg", "Darth-Vader.jpeg", "leia-organa.jpeg", "owenlars.jpeg", "berulars.jpeg", "r5-d4.jpeg", "biggs.jpeg", "Obi-Wan-Kenobi.jpeg"]
     },
     {
-        "src" : "C-3PO.jpeg"
+        "src" : ["anakin-skywalker.jpeg", "wilhuff-tarkin.jpeg", "chewbacca.jpeg", "han-solo.jpeg", "greedo.jpeg", "jabba-the-hutt.jpeg", "wedge-antilles.jpeg", "jek-porkins.jpeg", "yoda.jpeg", "palpatine.jpeg"]
     },
     {
-        "src" : "r2-d2.jpeg"
-    },
-    {
-        "src" : "Darth-Vader.jpeg"
-    },
-    {
-        "src" : "leia-organa.jpeg"
-    },
-    {
-        "src" : "owenlars.jpeg"
-    },
-    {
-        "src" : "berulars.jpeg"
-    },
-    {
-        "src" : "r5-d4.jpeg"
-    },
-    {
-        "src" : "biggs.jpeg"
-    },
-    {
-        "src" : "Obi-Wan-Kenobi.jpeg"
+        "src" : ["boba-fett.jpeg", "ig-88.jpeg", "bossk.jpeg", "lando-clarissian.jpeg", "lobot.jpeg", "ackbar.jpeg", "mon-mothma.jpeg", "arvel-crynyd.jpg", "wicket-warrick.jpeg", "nien-nunb.jpeg"]
     }
 ]
