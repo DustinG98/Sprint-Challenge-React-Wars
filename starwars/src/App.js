@@ -3,14 +3,15 @@ import './App.css';
 import axios from 'axios';
 import StarWarsCard from './components/starWarsCard'
 import styled from 'styled-components'
-
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Page1 from './imgdata/page1'
 
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
   const [cards, setCards] = useState([]);
-
 
   
   const Button = styled.button`
@@ -30,13 +31,22 @@ const App = () => {
     }
   `;
 
-  const CardCont = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-  `;
+  const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        alignItems: 'center',
+        justify:'center',
+        margin: 'auto',
+        flexDirection: 'column',
+      },
+    paper: {
+        height: 140,
+        width: 100,
+    },
+    control: {
+        padding: theme.spacing(2),
+    },
+  }));
 
 
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
@@ -50,9 +60,10 @@ const App = () => {
     setSearchTerm(event.target.value)
   }
 
+
   if(page === 0){
-    setPage(9);
-  } else if(page > 9){
+    setPage(3);
+  } else if(page > 3){
     setPage(1);
   }
 
@@ -65,12 +76,13 @@ const App = () => {
     .catch(err => {
       console.log(`There is no people. ${err}`)
     })
+
   }, [page])
 
-
+  const classes = useStyles();
   
-
   let itemStr;
+  let imgSrc;
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
@@ -80,20 +92,31 @@ const App = () => {
         value={searchTerm}
         onChange={handleChange}
       />
-      <CardCont>
-      {
-      cards.map((cv, index) => {
-        for(var item in cv){
-           itemStr = cv[item] + "";
-          if(itemStr.toLowerCase().includes(searchTerm.toLowerCase())){
-            return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
-          } else if(searchTerm === ''){
-            return <StarWarsCard key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
-          } 
-        }
-        return null;
-      })}
-      </CardCont>
+      <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={3}>
+        {
+        cards.map((cv, index) => {
+          Page1.forEach((pageOBJ, index2) => {
+            if(index2 === page - 1){
+              let sources = pageOBJ.src;
+              console.log(sources)
+              sources.forEach((imgSRC, index3) => {
+                return (index === index3) ? imgSrc = imgSRC : null;
+              })
+            } 
+          })
+          for(var item in cv){
+            itemStr = cv[item] + "";
+            if(itemStr.toLowerCase().includes(searchTerm.toLowerCase())){
+              return <StarWarsCard src={imgSrc} key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+            } else if(searchTerm === ''){
+              return <StarWarsCard src={imgSrc} key={index} name={cv.name} gender={cv.gender} eyeColor={cv.eye_color} hairColor={cv.hair_color} height={cv.height} mass={cv.mass} />
+            } 
+          }
+          return null;
+        })}
+        </Grid>
+      </Grid>
       <div>
         <Button onMouseDown={() => setPage(page-1)} >{'<'}</Button>
         <Button onMouseDown={() => setPage(page+1)}>{'>'}</Button>
