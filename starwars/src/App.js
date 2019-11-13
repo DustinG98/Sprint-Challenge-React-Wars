@@ -118,8 +118,8 @@ const App = () => {
         </Grid>
       </Grid>
       <div>
-        <Button onMouseDown={() => setPage(page-1)} >{'<'}</Button>
-        <Button onMouseDown={() => setPage(page+1)}>{'>'}</Button>
+        <Button onClick={() => setPage(page-1)} >{'<'}</Button>
+        <Button onClick={() => setPage(page+1)}>{'>'}</Button>
       </div>
     </div>
   );
